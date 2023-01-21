@@ -1,0 +1,42 @@
+#include <bits/stdc++.h> 
+
+bool possibleSol(vector<int> arr, int n, int m, int mid){
+    int countStudent=1;
+    int sumPage=0;
+    for(int i=0;i<n;i++){
+        if(sumPage+arr[i]<=mid){
+            sumPage+=arr[i];
+        }
+        else{
+            countStudent++;
+            if(countStudent>m || arr[i]>mid){
+                return false;
+            }
+            sumPage=arr[i];
+        }
+    }
+    return true;
+}
+
+int allocateBooks(vector<int> arr, int n, int m) {
+    // Write your code here.
+    int s=0;
+    int sum;
+    for(int j=0;j<n;j++){
+        sum+=arr[j];
+    }
+    int e=sum;
+    int ans=-1;
+    int mid=s+(e-s)/2;
+    while(s<=e){
+        if(possibleSol(arr,n,m,mid)){
+            ans=mid;
+            e=mid-1;
+        }
+        else{
+            s=mid+1;
+        }
+        mid=s+(e-s)/2;
+    }
+    return ans;
+}
